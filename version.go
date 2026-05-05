@@ -8,14 +8,18 @@ import (
 	"os"
 )
 
-// Set via ldflags at build time by consumers.
+// Build metadata stamped via ldflags by consumers.
 var (
-	Commit  = "unknown"
+	// Commit is the git commit hash, set via ldflags.
+	Commit = "unknown"
+	// Version is the release version, set via ldflags.
 	Version = "dev"
-	Dirty   = "false"
+	// Dirty is "true" when the working tree was dirty at build time.
+	Dirty = "false"
 )
 
-// BuildHash computes the SHA-256 of the running binary, truncated to 12 hex chars.
+// BuildHash computes the SHA-256 of the running binary, truncated to
+// 12 hex chars. Returns "unknown" if [os.Executable] or the read fail.
 func BuildHash() string {
 	exe, err := os.Executable()
 	if err != nil {
@@ -25,7 +29,7 @@ func BuildHash() string {
 	if err != nil {
 		return "unknown"
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 	h := sha256.New()
 	_, _ = io.Copy(h, f)
 	return hex.EncodeToString(h.Sum(nil))[:12]
