@@ -63,9 +63,9 @@ type cfg struct {
 	maxMemBytes int64
 	loadTimeout time.Duration
 	log         *slog.Logger
-	lockPath   string
-	ttlSeconds int // 0 = no TTL flag (models stay resident)
-	warmup     bool
+	lockPath    string
+	ttlSeconds  int // 0 = no TTL flag (models stay resident)
+	warmup      bool
 	warmupURL   string
 	warmupToken string
 }
@@ -74,7 +74,7 @@ func defaults() *cfg {
 	return &cfg{
 		loadTimeout: 120 * time.Second,
 		log:         slog.Default(),
-		lockPath: defaultLockPath(),
+		lockPath:    defaultLockPath(),
 		// ttlSeconds 0 = don't pass --ttl = models stay resident (no idle eviction)
 	}
 }

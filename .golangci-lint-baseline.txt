@@ -1,0 +1,17 @@
+# golangci-lint: generated_at=2026-05-05T00:23:45Z
+../evict.go:58:7: G204: Subprocess launched with a potential tainted input or cmd arguments (gosec)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:146:29: integer-format: fmt.Sprintf can be replaced with faster strconv.Itoa (perfsprint)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:149:32: integer-format: fmt.Sprintf can be replaced with faster strconv.Itoa (perfsprint)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:169:13: avoid inline error handling using `if err := ...; err != nil`; use plain assignment `err := ...` (noinlineerr)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:181:6: avoid inline error handling using `if err := ...; err != nil`; use plain assignment `err := ...` (noinlineerr)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:35:1: text "slog.Default" should be replaced with "[slog.Default]" to link to stdlib function (godoclint)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:66:1: File is not properly formatted (gofumpt)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lmctl.go:91:6: Function 'EnsureLoaded' has too many statements (48 > 40) (funlen)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lms.go:26:3: error is not nil (line 24) but it returns nil (nilerr)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lms.go:34:15: error returned from external package is unwrapped: sig: func (*os/exec.Cmd).Output() ([]byte, error) (wrapcheck)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lms.go:37:5: avoid inline error handling using `if err := ...; err != nil`; use plain assignment `err := ...` (noinlineerr)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lms.go:38:15: error returned from external package is unwrapped: sig: func encoding/json.Unmarshal(data []byte, v any) error (wrapcheck)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lms.go:53:5: avoid inline error handling using `if err := ...; err != nil`; use plain assignment `err := ...` (noinlineerr)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lock.go:24:5: avoid inline error handling using `if err := ...; err != nil`; use plain assignment `err := ...` (noinlineerr)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../lock.go:34:15: error-format: fmt.Errorf can be replaced with errors.New (perfsprint)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
+../version.go:18:1: godoc line is too long (80 > 77) (godoclint)	# golangci-lint:first_added=2026-05-05T00:23:45Z last_seen=2026-05-05T00:23:45Z
