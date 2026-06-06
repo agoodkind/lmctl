@@ -63,8 +63,10 @@ func listLoaded(ctx context.Context, lms string) ([]LoadedModel, error) {
 }
 
 func estimateModelSize(ctx context.Context, lms, model string) int64 {
+	log := slog.Default().With("component", "lmctl", "model", model)
 	out, err := exec.CommandContext(ctx, lms, "ls", "--json").Output()
 	if err != nil {
+		log.WarnContext(ctx, "list models for size estimate failed", "err", err)
 		return 0
 	}
 	base := BaseModelName(model)
@@ -74,6 +76,7 @@ func estimateModelSize(ctx context.Context, lms, model string) int64 {
 	}
 	err = json.Unmarshal(out, &models)
 	if err != nil {
+		log.WarnContext(ctx, "decode lms ls output failed", "err", err)
 		return 0
 	}
 	for _, m := range models {
@@ -115,6 +118,8 @@ var errUnsafeIdentifier = errors.New("unsafe model identifier")
 // [errUnsafeIdentifier] otherwise.
 func validateIdentifier(id string) (string, error) {
 	if !safeIdentifierPattern.MatchString(id) {
+		log := slog.Default().With("component", "lmctl")
+		log.Warn("rejected unsafe model identifier", "id", id)
 		return "", fmt.Errorf("%w: %q", errUnsafeIdentifier, id)
 	}
 	return id, nil
