@@ -1,1 +1,52 @@
-# golangci-lint: generated_at=2026-05-05T03:38:02Z
+# golangci-lint: generated_at=2026-11-08T23:03:59Z
+evict.go:40:53: Magic number: 1024, in <operation> detected (mnd)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:87:6: variable name 'm' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:54:3: missing whitespace above this line (invalid statement above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:96:3: missing whitespace above this line (invalid statement above assign) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:59:2: missing whitespace above this line (invalid statement above expr) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:99:2: missing whitespace above this line (too many lines above return) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:99:2: return with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+evict.go:94:4: continue with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:278:3: return with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:238:2: missing whitespace above this line (invalid statement above assign) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:280:2: missing whitespace above this line (invalid statement above expr) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:142:5: avoid inline error handling using `if err := ...; err != nil`; use plain assignment `err := ...` (noinlineerr)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:278:3: missing whitespace above this line (too many lines above return) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:235:2: missing whitespace above this line (invalid statement above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:207:2: missing whitespace above this line (no shared variables above range) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:207:6: variable name 'm' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:214:4: continue with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:229:21: parameter name 'c' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:29:66: Magic number: 1024, in <operation> detected (mnd)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:248:2: missing whitespace above this line (never cuddle decl) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:274:2: missing whitespace above this line (too many statements above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:78:16: Magic number: 120, in <assign> detected (mnd)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl.go:98:2: variable name 'c' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl_test.go:64:2: missing whitespace above this line (invalid statement above assign) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl_test.go:109:2: missing whitespace above this line (invalid statement above range) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lmctl_test.go:95:2: missing whitespace above this line (invalid statement above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:119:25: parameter name 'id' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:96:2: missing whitespace above this line (too many lines above return) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:96:2: return with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:67:2: missing whitespace above this line (too many statements above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:77:2: missing whitespace above this line (invalid statement above assign) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:73:2: missing whitespace above this line (never cuddle decl) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lms.go:82:2: missing whitespace above this line (invalid statement above range) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lock.go:50:2: missing whitespace above this line (too many lines above return) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lock.go:50:2: return with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lock.go:40:2: variable name 'fl' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lock.go:41:2: missing whitespace above this line (too many statements above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+lock.go:46:2: missing whitespace above this line (invalid statement above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+version.go:33:2: missing whitespace above this line (invalid statement above assign) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+version.go:28:2: variable name 'f' is too short for the scope of its usage (varnamelen)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+version.go:32:2: missing whitespace above this line (no shared variables above defer) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+version.go:35:2: missing whitespace above this line (too many lines above return) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+version.go:35:2: return with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:70:2: return with no blank line before (nlreturn)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:50:2: missing whitespace above this line (invalid statement above expr) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:51:2: missing whitespace above this line (invalid statement above if) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:62:2: missing whitespace above this line (invalid statement above assign) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:61:2: missing whitespace above this line (no shared variables above defer) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:64:24: Magic number: 400, in <condition> detected (mnd)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:65:16: do not define dynamic errors, use wrapped static errors instead: "fmt.Errorf(\"warmup returned %d\", resp.StatusCode)" (err113)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
+warmup.go:70:2: missing whitespace above this line (too many lines above return) (wsl_v5)	# golangci-lint:first_added=2026-11-08T23:03:18Z last_seen=2026-11-08T23:03:18Z
