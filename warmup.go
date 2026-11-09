@@ -47,6 +47,7 @@ func warmupModel(ctx context.Context, apiURL, token, model string) error {
 		log.ErrorContext(ctx, "failed to create warmup request", "err", err, "url", url)
 		return fmt.Errorf("create warmup request: %w", err)
 	}
+
 	req.Header.Set("Content-Type", "application/json")
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)
@@ -58,14 +59,23 @@ func warmupModel(ctx context.Context, apiURL, token, model string) error {
 		log.ErrorContext(ctx, "warmup request transport error", "err", err)
 		return fmt.Errorf("warmup request: %w", err)
 	}
+
 	defer func() { _ = resp.Body.Close() }()
 	_, _ = io.Copy(io.Discard, resp.Body)
 
 	if resp.StatusCode >= 400 {
 		statusErr := fmt.Errorf("warmup returned %d", resp.StatusCode)
-		log.ErrorContext(ctx, "warmup request returned non-2xx",
-			"status", resp.StatusCode, "err", statusErr)
+		log.ErrorContext(
+			ctx,
+			"warmup request returned non-2xx",
+			"status",
+			resp.StatusCode,
+			"err",
+			statusErr,
+		)
+
 		return statusErr
 	}
+
 	return nil
 }

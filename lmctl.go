@@ -96,6 +96,7 @@ func defaults() *cfg {
 // Returns nil if lms is not on PATH (graceful no-op).
 func EnsureLoaded(ctx context.Context, model string, opts ...Option) error {
 	c := defaults()
+
 	for _, o := range opts {
 		o(c)
 	}
@@ -132,10 +133,10 @@ func EnsureLoaded(ctx context.Context, model string, opts ...Option) error {
 		// refresh after potential unload
 		refreshed, refreshErr := listLoaded(ctx, lms)
 		if refreshErr != nil {
-			log.WarnContext(ctx, "failed to refresh loaded models for eviction",
-				"err", refreshErr)
+			log.WarnContext(ctx, "failed to refresh loaded models for eviction", "err", refreshErr)
 			refreshed = loaded
 		}
+
 		evictForBudget(ctx, log, lms, refreshed, base, newSize, c.maxMemBytes)
 	}
 
@@ -155,25 +156,31 @@ func EnsureLoaded(ctx context.Context, model string, opts ...Option) error {
 func acquireLockOrLog(ctx context.Context, log *slog.Logger, path string) func() {
 	unlock, err := acquireLock(ctx, path)
 	if err != nil {
-		log.WarnContext(ctx, "failed to acquire lmctl lock, proceeding unlocked",
-			"err", err)
+		log.WarnContext(ctx, "failed to acquire lmctl lock, proceeding unlocked", "err", err)
+
 		return func() {}
 	}
+
 	return unlock
 }
 
 // hasSufficientContext returns true if [base] is already loaded with at
 // least [wantCtx] tokens of context.
 func hasSufficientContext(
-	ctx context.Context, log *slog.Logger,
-	loaded []LoadedModel, base, model string, wantCtx int,
+	ctx context.Context,
+	log *slog.Logger,
+	loaded []LoadedModel,
+	base string,
+	model string,
+	wantCtx int,
 ) bool {
 	matched, foundCtx := findLoadedContext(loaded, base, wantCtx)
 	if !matched {
 		return false
 	}
-	log.InfoContext(ctx, "model already loaded",
-		"model", model, "context", foundCtx)
+
+	log.InfoContext(ctx, "model already loaded", "model", model, "context", foundCtx)
+
 	return true
 }
 
@@ -186,10 +193,12 @@ func findLoadedContext(loaded []LoadedModel, base string, wantCtx int) (bool, in
 		if !matchesModel(m, base) {
 			continue
 		}
+
 		if wantCtx == 0 || m.ContextLen >= wantCtx {
 			return true, m.ContextLen
 		}
 	}
+
 	return false, 0
 }
 
@@ -197,27 +206,43 @@ func findLoadedContext(loaded []LoadedModel, base string, wantCtx int) (bool, in
 // length is below the requested size, so the load step can re-load with
 // a larger context window. Emits a single summary log line for the batch.
 func unloadInsufficientContext(
-	ctx context.Context, log *slog.Logger,
-	lms string, loaded []LoadedModel, base string, wantCtx int,
+	ctx context.Context,
+	log *slog.Logger,
+	lms string,
+	loaded []LoadedModel,
+	base string,
+	wantCtx int,
 ) {
 	var (
 		ids      []string
 		failures int
 	)
+
 	for _, m := range loaded {
 		if !matchesModel(m, base) {
 			continue
 		}
+
 		err := runUnload(ctx, lms, m.Identifier)
 		if err != nil {
 			failures++
 			continue
 		}
+
 		ids = append(ids, m.Identifier)
 	}
+
 	if len(ids) > 0 || failures > 0 {
-		log.InfoContext(ctx, "unloaded models for context upgrade",
-			"models", ids, "need", wantCtx, "failures", failures)
+		log.InfoContext(
+			ctx,
+			"unloaded models for context upgrade",
+			"models",
+			ids,
+			"need",
+			wantCtx,
+			"failures",
+			failures,
+		)
 	}
 }
 
@@ -225,23 +250,35 @@ func unloadInsufficientContext(
 // configured load-timeout context. It logs the boundary events and
 // wraps any error from the external process.
 func runLoad(
-	ctx context.Context, log *slog.Logger,
-	lms, model string, c *cfg, newSize int64,
+	ctx context.Context,
+	log *slog.Logger,
+	lms string,
+	model string,
+	c *cfg,
+	newSize int64,
 ) error {
 	args := []string{"load", model}
 	if c.contextLen > 0 {
 		args = append(args, "-c", strconv.Itoa(c.contextLen))
 	}
+
 	if c.ttlSeconds > 0 {
 		args = append(args, "--ttl", strconv.Itoa(c.ttlSeconds))
 	}
+
 	args = append(args, "-y")
 
-	log.InfoContext(ctx, "loading model",
-		"model", model,
-		"context_length", c.contextLen,
-		"estimated_size_gb", newSize/(1024*1024*1024),
-		"ttl_seconds", c.ttlSeconds,
+	log.InfoContext(
+		ctx,
+		"loading model",
+		"model",
+		model,
+		"context_length",
+		c.contextLen,
+		"estimated_size_gb",
+		newSize/(1024*1024*1024),
+		"ttl_seconds",
+		c.ttlSeconds,
 	)
 
 	loadCtx := ctx
@@ -255,15 +292,29 @@ func runLoad(
 	cmd := exec.CommandContext(loadCtx, lms, args...)
 	output, loadErr := cmd.CombinedOutput()
 	if loadErr != nil {
-		log.ErrorContext(ctx, "lms load failed",
-			"model", model, "err", loadErr, "output", string(output))
+		log.ErrorContext(
+			ctx,
+			"lms load failed",
+			"model",
+			model,
+			"err",
+			loadErr,
+			"output",
+			string(output),
+		)
+
 		return fmt.Errorf("lms load %s: %w\n%s", model, loadErr, output)
 	}
 
-	log.InfoContext(ctx, "model loaded",
-		"model", model,
-		"load_duration", since(loadStart).Round(time.Millisecond),
+	log.InfoContext(
+		ctx,
+		"model loaded",
+		"model",
+		model,
+		"load_duration",
+		since(loadStart).Round(time.Millisecond),
 	)
+
 	return nil
 }
 
@@ -273,12 +324,17 @@ func runWarmup(ctx context.Context, log *slog.Logger, c *cfg, model string) {
 	warmupStart := now()
 	warmupErr := warmupModel(ctx, c.warmupURL, c.warmupToken, model)
 	if warmupErr != nil {
-		log.WarnContext(ctx, "warmup request failed",
-			"model", model, "err", warmupErr)
+		log.WarnContext(ctx, "warmup request failed", "model", model, "err", warmupErr)
+
 		return
 	}
-	log.InfoContext(ctx, "model warmed up",
-		"model", model,
-		"warmup_duration", since(warmupStart).Round(time.Millisecond),
+
+	log.InfoContext(
+		ctx,
+		"model warmed up",
+		"model",
+		model,
+		"warmup_duration",
+		since(warmupStart).Round(time.Millisecond),
 	)
 }
