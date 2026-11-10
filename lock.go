@@ -21,6 +21,7 @@ func defaultLockPath() string {
 		home, _ := os.UserHomeDir()
 		dir = filepath.Join(home, ".cache")
 	}
+
 	return filepath.Join(dir, "lmctl", "load.lock")
 }
 
@@ -43,9 +44,11 @@ func acquireLock(ctx context.Context, path string) (func(), error) {
 		log.ErrorContext(ctx, "failed to acquire lock", "err", err)
 		return nil, fmt.Errorf("acquire lock: %w", err)
 	}
+
 	if !ok {
 		log.WarnContext(ctx, "lock already held by another process")
 		return nil, errLockNotAcquired
 	}
+
 	return func() { _ = fl.Unlock() }, nil
 }

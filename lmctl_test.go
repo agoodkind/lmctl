@@ -32,6 +32,7 @@ func TestMatchesModel(t *testing.T) {
 	if !matchesModel(m, "qwen3-coder-next") {
 		t.Error("expected match on base name")
 	}
+
 	if matchesModel(m, "gpt-oss-120b") {
 		t.Error("expected no match on different model")
 	}
@@ -42,12 +43,15 @@ func TestDefaults(t *testing.T) {
 	if c.loadTimeout != 120_000_000_000 { // 120s in nanoseconds
 		t.Errorf("default loadTimeout = %v, want 120s", c.loadTimeout)
 	}
+
 	if c.contextLen != 0 {
 		t.Errorf("default contextLen = %d, want 0", c.contextLen)
 	}
+
 	if c.maxMemBytes != 0 {
 		t.Errorf("default maxMemBytes = %d, want 0", c.maxMemBytes)
 	}
+
 	if c.ttlSeconds != 0 {
 		t.Errorf("default ttlSeconds = %d, want 0 (no TTL)", c.ttlSeconds)
 	}
@@ -61,6 +65,7 @@ func TestWithOptions(t *testing.T) {
 	if c.contextLen != 262144 {
 		t.Errorf("contextLen = %d, want 262144", c.contextLen)
 	}
+
 	wantBytes := int64(80) * 1024 * 1024 * 1024
 	if c.maxMemBytes != wantBytes {
 		t.Errorf("maxMemBytes = %d, want %d", c.maxMemBytes, wantBytes)
@@ -81,9 +86,11 @@ func TestWithWarmup(t *testing.T) {
 	if !c.warmup {
 		t.Error("warmup should be true")
 	}
+
 	if c.warmupURL != "http://localhost:1234" {
 		t.Errorf("warmupURL = %q, want http://localhost:1234", c.warmupURL)
 	}
+
 	if c.warmupToken != "sk-test" {
 		t.Errorf("warmupToken = %q, want sk-test", c.warmupToken)
 	}
@@ -102,10 +109,13 @@ func TestBuildAttrs(t *testing.T) {
 	if len(attrs) != 4 {
 		t.Errorf("BuildAttrs() returned %d attrs, want 4", len(attrs))
 	}
+
 	keys := map[string]bool{}
+
 	for _, a := range attrs {
 		keys[a.Key] = true
 	}
+
 	for _, k := range []string{"commit", "version", "buildHash", "dirty"} {
 		if !keys[k] {
 			t.Errorf("BuildAttrs() missing key %q", k)
