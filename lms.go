@@ -31,6 +31,7 @@ func lookupLMS() string {
 	if err != nil {
 		return ""
 	}
+
 	return path
 }
 
@@ -43,6 +44,7 @@ func ListLoaded(ctx context.Context) ([]LoadedModel, error) {
 	if lms == "" {
 		return nil, nil
 	}
+
 	return listLoaded(ctx, lms)
 }
 
@@ -53,12 +55,14 @@ func listLoaded(ctx context.Context, lms string) ([]LoadedModel, error) {
 		log.ErrorContext(ctx, "lms ps --json failed", "err", err)
 		return nil, fmt.Errorf("lms ps --json: %w", err)
 	}
+
 	var models []LoadedModel
 	err = json.Unmarshal(out, &models)
 	if err != nil {
 		log.ErrorContext(ctx, "decode lms ps output failed", "err", err)
 		return nil, fmt.Errorf("decode lms ps output: %w", err)
 	}
+
 	return models, nil
 }
 
@@ -69,6 +73,7 @@ func estimateModelSize(ctx context.Context, lms, model string) int64 {
 		log.WarnContext(ctx, "list models for size estimate failed", "err", err)
 		return 0
 	}
+
 	base := BaseModelName(model)
 	var models []struct {
 		ModelKey  string `json:"modelKey"`
@@ -79,11 +84,13 @@ func estimateModelSize(ctx context.Context, lms, model string) int64 {
 		log.WarnContext(ctx, "decode lms ls output failed", "err", err)
 		return 0
 	}
+
 	for _, m := range models {
 		if BaseModelName(m.ModelKey) == base {
 			return m.SizeBytes
 		}
 	}
+
 	return 0
 }
 
@@ -93,6 +100,7 @@ func BaseModelName(model string) string {
 	if i := strings.LastIndex(model, "/"); i >= 0 {
 		return model[i+1:]
 	}
+
 	return model
 }
 
@@ -120,8 +128,10 @@ func validateIdentifier(id string) (string, error) {
 	if !safeIdentifierPattern.MatchString(id) {
 		log := slog.Default().With("component", "lmctl")
 		log.Warn("rejected unsafe model identifier", "id", id)
+
 		return "", fmt.Errorf("%w: %q", errUnsafeIdentifier, id)
 	}
+
 	return id, nil
 }
 
@@ -136,11 +146,13 @@ func runUnload(ctx context.Context, lms, id string) error {
 		log.ErrorContext(ctx, "rejected unsafe model identifier", "err", err)
 		return err
 	}
+
 	cmd := exec.CommandContext(ctx, lms, "unload", safeID)
 	runErr := cmd.Run()
 	if runErr != nil {
 		log.ErrorContext(ctx, "lms unload failed", "err", runErr)
 		return fmt.Errorf("lms unload %s: %w", safeID, runErr)
 	}
+
 	return nil
 }

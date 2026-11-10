@@ -25,13 +25,16 @@ func BuildHash() string {
 	if err != nil {
 		return "unknown"
 	}
+
 	f, err := os.Open(exe)
 	if err != nil {
 		return "unknown"
 	}
+
 	defer func() { _ = f.Close() }()
 	h := sha256.New()
 	_, _ = io.Copy(h, f)
+
 	return hex.EncodeToString(h.Sum(nil))[:12]
 }
 
